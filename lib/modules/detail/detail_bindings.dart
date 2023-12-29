@@ -1,4 +1,3 @@
-
 import 'package:flutter_subm2_getx/modules/detail/detail_controller.dart';
 import 'package:get/get.dart';
 import 'package:flutter_subm2_getx/services/api_service.dart';
@@ -6,6 +5,11 @@ import 'package:flutter_subm2_getx/services/api_service.dart';
 class DetailBindings implements Bindings {
   @override
   void dependencies() {
-    Get.lazyPut<DetailController>(() => DetailController(apiService: ApiService()));
+    Get.put(ApiService());
+    // Get.lazyPut<DetailController>(() => DetailController(apiService: ApiService()));
+    // Get.lazyPut<DetailController>(
+    //     () => DetailController(apiService: Get.find<ApiService>()));
+    Get.lazyPut<DetailController>(
+        () => DetailController(apiService: Get.find<ApiService>()));
   }
 }

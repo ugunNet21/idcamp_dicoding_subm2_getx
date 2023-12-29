@@ -1,5 +1,5 @@
-
 import 'package:flutter_subm2_getx/models/restaurant.dart';
+import 'package:flutter_subm2_getx/routes/app_routes.dart';
 import 'package:flutter_subm2_getx/services/api_service.dart';
 import 'package:get/get.dart';
 
@@ -28,11 +28,18 @@ class HomeController extends GetxController {
                   pictureId: data['pictureId'],
                   city: data['city'],
                   rating: data['rating'].toDouble(),
+                  categories: [],
+                  menus: Menus(foods: [], drinks: []),
+                  customerReviews: [],
                 ))
             .toList());
       }
     } catch (e) {
       print('Error: $e');
     }
+  }
+
+  void navigateToDetail(String restaurantId) {
+    Get.toNamed(AppRoutes.DETAIL, arguments: restaurantId);
   }
 }

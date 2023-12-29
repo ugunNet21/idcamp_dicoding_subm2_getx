@@ -7,8 +7,6 @@ class ApiService {
 
   Future<Map<String, dynamic>> fetchData(String endpoint,
       {Map<String, String>? body, String method = 'GET'}) async {
-    // Perhatikan bahwa saya menambahkan {Map<String, String>? body, String method = 'GET'} di parameter
-    // Ini memberikan nilai default 'GET' untuk method dan memungkinkan body menjadi opsional (nullable).
     try {
       http.Response response;
 
@@ -30,6 +28,25 @@ class ApiService {
       } else {
         throw Exception('Failed to load data');
       }
+    } catch (e) {
+      throw Exception('Error: $e');
+    }
+  }
+
+  Future<Map<String, dynamic>> searchRestaurants(String query) async {
+    final response = await http.get(Uri.parse('$baseUrl/search?q=$query'));
+
+    if (response.statusCode == 200) {
+      return {'error': false, 'restaurants': response.body};
+    } else {
+      return {'error': true, 'message': 'Failed to search restaurants'};
+    }
+  }
+
+  Future<Map<String, dynamic>> getRestaurantDetail(String restaurantId) async {
+    try {
+      final result = await fetchData('/detail/$restaurantId');
+      return result;
     } catch (e) {
       throw Exception('Error: $e');
     }

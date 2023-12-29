@@ -3,14 +3,14 @@ import 'package:flutter_subm2_getx/services/api_service.dart';
 import 'package:get/get.dart';
 
 class SearchController extends GetxController {
-  final ApiService apiService;
   var searchResults = <Restaurant>[].obs;
+  final ApiService apiService;
 
   SearchController({required this.apiService});
 
-  Future<void> searchRestaurants(String query) async {
+  void searchRestaurants(String query) async {
     try {
-      final result = await apiService.fetchData('/search?q=$query');
+      final result = await apiService.searchRestaurants(query);
       if (!result['error']) {
         final List<dynamic> restaurantData = result['restaurants'];
         searchResults.assignAll(restaurantData
@@ -21,6 +21,9 @@ class SearchController extends GetxController {
                   pictureId: data['pictureId'],
                   city: data['city'],
                   rating: data['rating'].toDouble(),
+                  categories: [], // Assign an empty list for now, you may update this based on your data
+                  menus: Menus(foods: [], drinks: []), // Assign empty Menus for now
+                  customerReviews: [], // Assign an empty list for now, you may update this based on your data
                 ))
             .toList());
       }
