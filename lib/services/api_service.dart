@@ -20,12 +20,10 @@ class ApiService {
           body: jsonEncode(body),
         );
       } else {
-        // Handle other HTTP methods if needed
         throw Exception('Unsupported HTTP method');
       }
 
       if (response.statusCode == 200 || response.statusCode == 201) {
-        // Update your state or view with the data from response
         return json.decode(response.body);
       } else {
         throw Exception('Failed to load data');
@@ -44,7 +42,6 @@ class ApiService {
       if (restaurantsData.isEmpty) {
         return {'error': true, 'message': 'Restaurants not found'};
       }
-      // Map each restaurant data to a format that we expect
       final List<Map<String, dynamic>> mappedRestaurants = restaurantsData
           .map((data) => {
                 'id': data['id'],
@@ -55,8 +52,6 @@ class ApiService {
                 'rating': data['rating'],
               })
           .toList();
-
-      // Return the mapped data
       return {'error': false, 'restaurants': mappedRestaurants};
     } else {
       return {'error': true, 'message': 'Failed to search restaurants'};
@@ -96,27 +91,3 @@ class ApiService {
     }
   }
 }
-
-  // Future<Map<String, dynamic>> addReview(
-  //     String restaurantId, String name, String review) async {
-  //   try {
-  //     final Map<String, String> body = {
-  //       'id': restaurantId,
-  //       'name': name,
-  //       'review': review
-  //     };
-  //     final response = await http.post(
-  //       Uri.parse('$baseUrl/review'),
-  //       headers: {'Content-Type': 'application/json'},
-  //       body: jsonEncode(body),
-  //     );
-
-  //     if (response.statusCode == 200) {
-  //       return json.decode(response.body);
-  //     } else {
-  //       throw Exception('Failed to add review');
-  //     }
-  //   } catch (e) {
-  //     throw Exception('Error: $e');
-  //   }
-  // }
