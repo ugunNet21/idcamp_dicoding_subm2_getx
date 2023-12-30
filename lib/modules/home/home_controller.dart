@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:flutter_subm2_getx/models/restaurant.dart';
 import 'package:flutter_subm2_getx/routes/app_routes.dart';
 import 'package:flutter_subm2_getx/services/api_service.dart';
@@ -5,9 +6,26 @@ import 'package:get/get.dart';
 
 class HomeController extends GetxController {
   final ApiService apiService;
+  var isLoading = true.obs;
+  var error = ''.obs;
   var restaurants = <Restaurant>[].obs;
 
   HomeController({required this.apiService});
+   void showSnackbarError(String errorMessage) {
+    Get.snackbar(
+      'Try Again',
+      errorMessage,
+      backgroundColor: Colors.red,
+      colorText: Colors.white,
+      snackPosition: SnackPosition.BOTTOM,
+      margin: EdgeInsets.all(16.0),
+    );
+  }
+
+  void setError(String errorMessage) {
+    error(errorMessage);
+    showSnackbarError(errorMessage);
+  }
 
   @override
   void onInit() {
@@ -17,6 +35,8 @@ class HomeController extends GetxController {
 
   Future<void> fetchData() async {
     try {
+      isLoading(true);
+      error('');
       final result = await apiService.fetchData('/list');
       if (!result['error']) {
         final List<dynamic> restaurantData = result['restaurants'];
@@ -35,7 +55,9 @@ class HomeController extends GetxController {
             .toList());
       }
     } catch (e) {
-      print('Error: $e');
+      error(e.toString());
+    } finally {
+      isLoading(false);
     }
   }
 

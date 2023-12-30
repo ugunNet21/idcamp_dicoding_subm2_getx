@@ -12,7 +12,7 @@ class RestaurantImageView extends StatelessWidget {
         title: Text('Restaurant Image'),
       ),
       body: Center(
-        child: Image.network('https://restaurant-api.dicoding.dev/images/large/$pictureId'),
+        child: Image.network('https://restaurant-api.dicoding.dev/images/medium/$pictureId'),
       ),
     );
   }

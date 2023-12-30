@@ -6,9 +6,6 @@ class DetailBindings implements Bindings {
   @override
   void dependencies() {
     Get.put(ApiService());
-    // Get.lazyPut<DetailController>(() => DetailController(apiService: ApiService()));
-    // Get.lazyPut<DetailController>(
-    //     () => DetailController(apiService: Get.find<ApiService>()));
     Get.lazyPut<DetailController>(
         () => DetailController(apiService: Get.find<ApiService>()));
   }
