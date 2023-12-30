@@ -12,8 +12,17 @@ This is a simple Flutter application for finding restaurants using the Dicoding 
 - Add reviews to restaurants
 
 ## Screenshots
-
 Include some screenshots or GIFs of your application to showcase its functionality.
+![home](https://github.com/ugunNet21/idcamp_dicoding_subm2_getx/assets/45864165/ae6f72c7-7725-40d0-b965-de032f8d36f3)
+
+![etail](https://github.com/ugunNet21/idcamp_dicoding_subm2_getx/assets/45864165/f7407274-45d1-495a-833a-6e8244252c87)
+
+![review](https://github.com/ugunNet21/idcamp_dicoding_subm2_getx/assets/45864165/56d112d8-9eb2-4137-9bea-79e226e7359c)
+
+![search](https://github.com/ugunNet21/idcamp_dicoding_subm2_getx/assets/45864165/a5ee04a2-eb40-4103-b7a8-fd27bb8b22da)
+
+
+
 
 ## Getting Started
 
