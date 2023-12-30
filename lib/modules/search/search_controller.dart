@@ -4,17 +4,17 @@ import 'package:flutter/material.dart';
 import 'package:flutter_subm2_getx/models/restaurant.dart';
 import 'package:flutter_subm2_getx/routes/app_routes.dart';
 import 'package:flutter_subm2_getx/services/api_service.dart';
+// ignore: depend_on_referenced_packages
 import 'package:get/get.dart';
 
 class SearchController extends GetxController {
   var searchResults = <Restaurant>[].obs;
   final ApiService apiService;
-   var error = ''.obs;
+  var error = ''.obs;
 
   SearchController({required this.apiService});
   void setError(String errorMessage) {
     error(errorMessage);
-    // showSnackbarError(errorMessage);
   }
 
   void searchRestaurants(String query) async {
@@ -32,16 +32,14 @@ class SearchController extends GetxController {
 
       final result = await apiService.searchRestaurants(query);
       if (result['error']) {
-        // Handle error response
-        print('Error: ${result['message']}');
+        debugPrint('Error: ${result['message']}');
         showSnackbarError('Terjadi kesalahan. Silakan coba lagi.');
         return;
       }
 
       final List<dynamic> restaurantData = result['restaurants'];
       if (restaurantData.isEmpty) {
-        // Handle case when no matching restaurants are found
-        print('No matching restaurants found');
+        debugPrint('No matching restaurants found');
         showSnackbarInfo('Tidak ada restoran yang cocok.');
         return;
       }
@@ -60,6 +58,7 @@ class SearchController extends GetxController {
               ))
           .toList());
     } catch (e) {
+      // ignore: avoid_print
       print('Error: $e');
     }
   }
@@ -74,7 +73,7 @@ class SearchController extends GetxController {
   }
 
   void navigateToDetail(String restaurantId) {
-    Get.toNamed(AppRoutes.DETAIL, arguments: restaurantId);
+    Get.toNamed(AppRoutes.detail, arguments: restaurantId);
   }
 
   void showSnackbarError(String errorMessage) {
@@ -84,7 +83,7 @@ class SearchController extends GetxController {
       backgroundColor: Colors.red,
       colorText: Colors.white,
       snackPosition: SnackPosition.BOTTOM,
-      margin: EdgeInsets.all(16.0),
+      margin: const EdgeInsets.all(16.0),
     );
   }
 
@@ -93,7 +92,7 @@ class SearchController extends GetxController {
       'Info',
       message,
       snackPosition: SnackPosition.BOTTOM,
-      margin: EdgeInsets.all(16.0),
+      margin: const EdgeInsets.all(16.0),
     );
   }
 }

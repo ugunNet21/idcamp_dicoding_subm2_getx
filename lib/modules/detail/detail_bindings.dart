@@ -1,4 +1,5 @@
 import 'package:flutter_subm2_getx/modules/detail/detail_controller.dart';
+// ignore: depend_on_referenced_packages
 import 'package:get/get.dart';
 import 'package:flutter_subm2_getx/services/api_service.dart';
 

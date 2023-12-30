@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_subm2_getx/models/restaurant.dart';
 import 'package:flutter_subm2_getx/routes/app_routes.dart';
 import 'package:flutter_subm2_getx/services/api_service.dart';
+// ignore: depend_on_referenced_packages
 import 'package:get/get.dart';
 
 class HomeController extends GetxController {
@@ -18,7 +19,7 @@ class HomeController extends GetxController {
       backgroundColor: Colors.red,
       colorText: Colors.white,
       snackPosition: SnackPosition.BOTTOM,
-      margin: EdgeInsets.all(16.0),
+      margin: const EdgeInsets.all(16.0),
     );
   }
 
@@ -62,6 +63,6 @@ class HomeController extends GetxController {
   }
 
   void navigateToDetail(String restaurantId) {
-    Get.toNamed(AppRoutes.DETAIL, arguments: restaurantId);
+    Get.toNamed(AppRoutes.detail, arguments: restaurantId);
   }
 }

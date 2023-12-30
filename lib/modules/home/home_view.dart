@@ -1,22 +1,24 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_subm2_getx/modules/home/home_controller.dart';
 import 'package:flutter_subm2_getx/routes/app_routes.dart';
+// ignore: depend_on_referenced_packages
 import 'package:get/get.dart';
 
 class HomeView extends StatelessWidget {
   final HomeController controller = Get.find();
 
+   HomeView({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Restaurant List'),
+        title: const Text('Restaurant List'),
         actions: [
           IconButton(
-            icon: Icon(Icons.search),
+            icon: const Icon(Icons.search),
             onPressed: () async {
-              await Get.toNamed(AppRoutes.SEARCH);
-              // Setelah kembali dari SearchView, panggil fetchData untuk memperbarui data
+              await Get.toNamed(AppRoutes.search);
               controller.fetchData();
             },
           ),
@@ -34,7 +36,7 @@ class HomeView extends StatelessWidget {
 
   Widget _buildContent(BuildContext context, HomeController controller) {
     if (controller.isLoading.value) {
-      return Center(
+      return const Center(
         child: CircularProgressIndicator(),
       );
     } else if (controller.error.isNotEmpty) {
@@ -42,20 +44,19 @@ class HomeView extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Text('There is an error. check internet connection'),
+            const Text('There is an error. check internet connection'),
             ElevatedButton(
               onPressed: () {
-                // Set error ke empty string dan panggil fetchData
                 controller.setError('');
                 controller.fetchData();
               },
-              child: Text('Try Again'),
+              child: const Text('Try Again'),
             ),
           ],
         ),
       );
     } else if (controller.restaurants.isEmpty) {
-      return Center(
+      return const Center(
         child: Text('No restaurants available.'),
       );
     } else {

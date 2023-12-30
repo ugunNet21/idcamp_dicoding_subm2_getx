@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_subm2_getx/models/restaurant.dart';
+// ignore: depend_on_referenced_packages
 import 'package:get/get.dart';
 import 'package:flutter_subm2_getx/modules/search/search_controller.dart'
+    // ignore: library_prefixes
     as MySearchController;
 // import 'package:flutter_subm2_getx/models/restaurant.dart';
 
@@ -10,11 +12,13 @@ class SearchView extends StatelessWidget {
   final TextEditingController searchController = TextEditingController();
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
+  SearchView({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Search Restaurants'),
+        title: const Text('Search Restaurants'),
       ),
       body: Form(
         key: _formKey,
@@ -33,7 +37,7 @@ class SearchView extends StatelessWidget {
                 decoration: InputDecoration(
                   labelText: 'Search',
                   suffixIcon: IconButton(
-                    icon: Icon(Icons.search),
+                    icon: const Icon(Icons.search),
                     onPressed: () {
                       if (_formKey.currentState!.validate()) {
                         controller.searchRestaurants(searchController.text);
@@ -54,14 +58,13 @@ class SearchView extends StatelessWidget {
                 ),
               ),
             ),
-            // Tombol "Try Again" jika koneksi internet tidak aktif
-            if (controller.error.value.contains('Tidak ada koneksi internet.'))
+            if (controller.error.value.contains('No internet connection.'))
               ElevatedButton(
                 onPressed: () {
                   controller.setError('');
                   controller.searchRestaurants(searchController.text);
                 },
-                child: Text('Try Again'),
+                child: const Text('Try Again'),
               ),
           ],
         ),

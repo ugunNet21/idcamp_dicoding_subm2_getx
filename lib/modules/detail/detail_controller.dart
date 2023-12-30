@@ -1,5 +1,6 @@
 import 'package:flutter_subm2_getx/models/restaurant.dart';
 import 'package:flutter_subm2_getx/services/api_service.dart';
+// ignore: depend_on_referenced_packages
 import 'package:get/get.dart';
 
 class DetailController extends GetxController {
@@ -49,62 +50,22 @@ class DetailController extends GetxController {
         // restaurant(fetchedRestaurant);
       }
     } catch (e) {
+      // ignore: avoid_print
       print('Error: $e');
     }
   }
 
   final RxBool reviewAdded = RxBool(false);
-
-  // Future<void> addReview(
-  //     String restaurantId, String name, String review) async {
-  //   try {
-  //     final result = await apiService.addReview(restaurantId, name, review);
-  //     if (!result['error']) {
-  //       // reviewAdded.value =
-  //       //     true; // Set nilai menjadi true jika berhasil ditambahkan
-  //       reviewAdded(true);
-  //     }
-  //   } catch (e) {
-  //     print('Error adding review: $e');
-  //   }
-  // }
   Future<void> addReview(
-  String restaurantId, String name, String review) async {
-  try {
-    final result = await apiService.addReview(restaurantId, name, review);
-    if (!result['error']) {
-      reviewAdded.value = true;
+      String restaurantId, String name, String review) async {
+    try {
+      final result = await apiService.addReview(restaurantId, name, review);
+      if (!result['error']) {
+        reviewAdded.value = true;
+      }
+    } catch (e) {
+      // ignore: avoid_print
+      print('Error adding review: $e');
     }
-  } catch (e) {
-    print('Error adding review: $e');
   }
 }
-
-}
-
-
-// class DetailController extends GetxController {
-//   final ApiService apiService;
-//   var restaurant = Restaurant(id: '', name: '', description: '', pictureId: '', city: '', rating: 0.0).obs;
-
-//   DetailController({required this.apiService});
-
-//   Future<void> fetchDetail(String restaurantId) async {
-//     try {
-//       final result = await apiService.fetchData('/detail/$restaurantId');
-//       if (!result['error']) {
-//         final Map<String, dynamic> restaurantData = result['restaurant'];
-//         restaurant.value = Restaurant(
-//           id: restaurantData['id'],
-//           name: restaurantData['name'],
-//           description: restaurantData['description'],
-//           pictureId: restaurantData['pictureId'],
-//           city: restaurantData['city'],
-//           rating: restaurantData['rating'].toDouble(),
-//         );
-//       }
-//     } catch (e) {
-//       print('Error: $e');
-//     }
-//   }
-// }
