@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_subm2_getx/modules/detail/detail_view.dart';
 import 'package:flutter_subm2_getx/routes/app_routes.dart';
 // ignore: depend_on_referenced_packages
 import 'package:get/get.dart';
@@ -25,26 +24,31 @@ class AddReviewController extends GetxController {
 
       if (!result['error']) {
         debugPrint('Review added successfully');
-        _showSnackbar('Review added successfully');
-        Get.offUntil(
-          GetPageRoute(
-            page: () => DetailView(),
+        Get.showSnackbar(
+          GetSnackBar(
+            message: 'Review added successfully',
+            duration: Duration(seconds: 20),
           ),
-          ModalRoute.withName(AppRoutes.home),
         );
+        Get.until((route) => Get.currentRoute == AppRoutes.home);
       }
     } catch (e) {
       debugPrint('Error: $e');
-      _showSnackbar('Failed to add review');
+      Get.showSnackbar(
+        GetSnackBar(
+          message: 'Failed to add review',
+          duration: Duration(seconds: 2),
+        ),
+      );
     }
   }
-
-  void _showSnackbar(String message) {
-    Get.snackbar(
-      'Review Status',
-      message,
-      snackPosition: SnackPosition.BOTTOM,
-      margin: const EdgeInsets.all(16.0),
-    );
-  }
 }
+
+  // void _showSnackbar(String message) {
+  //   print('Showing Snackbar: $message');
+  //   Get.rawSnackbar(
+  //     messageText: Text(message),
+  //     snackPosition: SnackPosition.BOTTOM,
+  //     margin: const EdgeInsets.all(16.0),
+  //   );
+  // }

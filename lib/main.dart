@@ -4,6 +4,7 @@ import 'package:flutter_subm2_getx/routes/app_routes.dart';
 // ignore: depend_on_referenced_packages
 import 'package:get/get.dart';
 void main() {
+  WidgetsFlutterBinding.ensureInitialized();
   runApp(
     GetMaterialApp(
       title: 'Finder Resto',
