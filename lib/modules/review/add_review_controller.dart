@@ -25,7 +25,7 @@ class AddReviewController extends GetxController {
       if (!result['error']) {
         debugPrint('Review added successfully');
         Get.showSnackbar(
-          GetSnackBar(
+          const GetSnackBar(
             message: 'Review added successfully',
             duration: Duration(seconds: 20),
           ),
@@ -35,7 +35,7 @@ class AddReviewController extends GetxController {
     } catch (e) {
       debugPrint('Error: $e');
       Get.showSnackbar(
-        GetSnackBar(
+        const GetSnackBar(
           message: 'Failed to add review',
           duration: Duration(seconds: 2),
         ),
@@ -43,12 +43,3 @@ class AddReviewController extends GetxController {
     }
   }
 }
-
-  // void _showSnackbar(String message) {
-  //   print('Showing Snackbar: $message');
-  //   Get.rawSnackbar(
-  //     messageText: Text(message),
-  //     snackPosition: SnackPosition.BOTTOM,
-  //     margin: const EdgeInsets.all(16.0),
-  //   );
-  // }

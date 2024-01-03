@@ -8,13 +8,14 @@ class DetailView extends StatelessWidget {
   final DetailController controller = Get.find();
   final String restaurantId = Get.arguments as String;
 
-  DetailView({super.key});
+  DetailView({Key? key}) : super(key: key);
+
+  Future<void> _refresh() async {
+    await controller.fetchRestaurantDetail(restaurantId);
+  }
 
   @override
   Widget build(BuildContext context) {
-    final String restaurantId = Get.arguments;
-    controller.fetchRestaurantDetail(restaurantId);
-
     return Scaffold(
       appBar: AppBar(
         title: Obx(() => Text(controller.restaurant.value.name)),
@@ -22,126 +23,154 @@ class DetailView extends StatelessWidget {
           IconButton(
             icon: const Icon(Icons.rate_review),
             onPressed: () {
-              Get.toNamed(AppRoutes.addReview, arguments: restaurantId)
-                  ?.then((result) {
-                if (result == true) {
-                  controller.fetchRestaurantDetail(restaurantId);
-                }
-              });
+              Get.toNamed(AppRoutes.addReview, arguments: restaurantId);
             },
           ),
         ],
       ),
-      body: Obx(
-        () => SingleChildScrollView(
-          padding: const EdgeInsets.all(16.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Container(
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(8.0),
-                ),
-                child: ClipRRect(
-                  borderRadius: BorderRadius.circular(8.0),
-                  child: Image.network(
-                    'https://restaurant-api.dicoding.dev/images/medium/${controller.restaurant.value.pictureId}',
-                    errorBuilder: (context, error, stackTrace) {
-                      debugPrint('Error loading image: $error');
-                      return const Text('Error loading image');
+      body: FutureBuilder(
+        future: controller.fetchRestaurantDetail(restaurantId),
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return const Center(
+              child: CircularProgressIndicator(),
+            );
+          } else if (snapshot.hasError || controller.error.isNotEmpty) {
+            return Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  // Text('Error: ${snapshot.error}'),
+                  const Text('There is an error. Check internet connection'),
+                  ElevatedButton(
+                    onPressed: () {
+                      Get.back();
                     },
-                    height: 200,
-                    width: double.infinity,
-                    fit: BoxFit.cover,
+                    child: const Text('Get to Home'),
                   ),
-                ),
+                ],
               ),
-              Padding(
+            );
+          } else if (controller.restaurant.value.id.isEmpty) {
+            return const Center(
+              child: Text('No restaurant available.'),
+            );
+          } else {
+            return RefreshIndicator(
+              onRefresh: _refresh,
+              child: SingleChildScrollView(
                 padding: const EdgeInsets.all(16.0),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(
-                      controller.restaurant.value.name,
-                      style: const TextStyle(
-                        fontSize: 24,
-                        fontWeight: FontWeight.bold,
+                    Container(
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(8.0),
+                      ),
+                      child: ClipRRect(
+                        borderRadius: BorderRadius.circular(8.0),
+                        child: Image.network(
+                          'https://restaurant-api.dicoding.dev/images/medium/${controller.restaurant.value.pictureId}',
+                          errorBuilder: (context, error, stackTrace) {
+                            debugPrint('Error loading image: $error');
+                            return const Text('Error loading image');
+                          },
+                          height: 200,
+                          width: double.infinity,
+                          fit: BoxFit.cover,
+                        ),
                       ),
                     ),
-                    const SizedBox(height: 8),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(
-                          'City: ${controller.restaurant.value.city}',
-                          style: const TextStyle(fontSize: 16),
-                        ),
-                        Row(
-                          children: [
-                            const Icon(Icons.star, color: Colors.amber),
-                            Text(
-                              controller.restaurant.value.rating.toString(),
-                              style: const TextStyle(fontSize: 16),
+                    Padding(
+                      padding: const EdgeInsets.all(16.0),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            controller.restaurant.value.name,
+                            style: const TextStyle(
+                              fontSize: 24,
+                              fontWeight: FontWeight.bold,
                             ),
-                          ],
-                        ),
-                      ],
-                    ),
-                  ],
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                child: ExpansionTile(
-                  title: const Text('Description'),
-                  children: [
-                    Text(controller.restaurant.value.description),
-                  ],
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.all(16.0),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      'Categories: ${controller.restaurant.value.categories.map((category) => category.name).join(', ')}',
-                    ),
-                    const SizedBox(height: 8),
-                    Text(
-                      'Foods: ${controller.restaurant.value.menus.foods.map((food) => food.name).join(', ')}',
-                    ),
-                    const SizedBox(height: 8),
-                    Text(
-                      'Drinks: ${controller.restaurant.value.menus.drinks.map((drink) => drink.name).join(', ')}',
-                    ),
-                    const SizedBox(height: 16),
-                    const Text(
-                      'Customer Reviews:',
-                      style:
-                          TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-                    ),
-                    for (var review
-                        in controller.restaurant.value.customerReviews)
-                      Card(
-                        margin: const EdgeInsets.symmetric(vertical: 8.0),
-                        child: ListTile(
-                          title: Text(review.name),
-                          subtitle: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
+                          ),
+                          const SizedBox(height: 8),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              Text(review.review),
-                              Text('Date: ${review.date}'),
+                              Text(
+                                'City: ${controller.restaurant.value.city}',
+                                style: const TextStyle(fontSize: 16),
+                              ),
+                              Row(
+                                children: [
+                                  const Icon(Icons.star, color: Colors.amber),
+                                  Text(
+                                    controller.restaurant.value.rating
+                                        .toString(),
+                                    style: const TextStyle(fontSize: 16),
+                                  ),
+                                ],
+                              ),
                             ],
                           ),
-                        ),
+                        ],
                       ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                      child: ExpansionTile(
+                        title: const Text('Description'),
+                        children: [
+                          Text(controller.restaurant.value.description),
+                        ],
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.all(16.0),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            'Categories: ${controller.restaurant.value.categories.map((category) => category.name).join(', ')}',
+                          ),
+                          const SizedBox(height: 8),
+                          Text(
+                            'Foods: ${controller.restaurant.value.menus.foods.map((food) => food.name).join(', ')}',
+                          ),
+                          const SizedBox(height: 8),
+                          Text(
+                            'Drinks: ${controller.restaurant.value.menus.drinks.map((drink) => drink.name).join(', ')}',
+                          ),
+                          const SizedBox(height: 16),
+                          const Text(
+                            'Customer Reviews:',
+                            style: TextStyle(
+                                fontSize: 18, fontWeight: FontWeight.bold),
+                          ),
+                          for (var review
+                              in controller.restaurant.value.customerReviews)
+                            Card(
+                              margin: const EdgeInsets.symmetric(vertical: 8.0),
+                              child: ListTile(
+                                title: Text(review.name),
+                                subtitle: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(review.review),
+                                    Text('Date: ${review.date}'),
+                                  ],
+                                ),
+                              ),
+                            ),
+                        ],
+                      ),
+                    ),
                   ],
                 ),
               ),
-            ],
-          ),
-        ),
+            );
+          }
+        },
       ),
     );
   }

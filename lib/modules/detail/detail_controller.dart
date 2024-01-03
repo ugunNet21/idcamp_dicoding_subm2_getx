@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:flutter_subm2_getx/models/restaurant.dart';
 import 'package:flutter_subm2_getx/services/api_service.dart';
 // ignore: depend_on_referenced_packages
@@ -5,6 +6,23 @@ import 'package:get/get.dart';
 
 class DetailController extends GetxController {
   final ApiService apiService;
+  var isLoading = true.obs;
+  var error = ''.obs;
+  void showSnackbarError(String errorMessage) {
+    Get.snackbar(
+      'Try Again',
+      errorMessage,
+      backgroundColor: Colors.red,
+      colorText: Colors.white,
+      snackPosition: SnackPosition.BOTTOM,
+      margin: const EdgeInsets.all(16.0),
+    );
+  }
+
+  void setError(String errorMessage) {
+    error(errorMessage);
+    showSnackbarError(errorMessage);
+  }
 
   DetailController({required this.apiService});
   final Rx<Restaurant> restaurant = Rx<Restaurant>(Restaurant(
@@ -19,8 +37,11 @@ class DetailController extends GetxController {
     customerReviews: [],
   ));
 
-  void fetchRestaurantDetail(String restaurantId) async {
+  Future<void> fetchRestaurantDetail(String restaurantId) async {
     try {
+      isLoading(true);
+      error('');
+      reviewAdded.value = false;
       final result = await apiService.getRestaurantDetail(restaurantId);
       if (!result['error']) {
         final Map<String, dynamic> restaurantData = result['restaurant'];
@@ -47,11 +68,24 @@ class DetailController extends GetxController {
                   ))),
         );
         restaurant.value = fetchedRestaurant;
-        // restaurant(fetchedRestaurant);
+      } else {
+        isLoading(false);
+        setError('Failed to load data. Check your internet connection.');
+        reviewAdded.value = false;
       }
     } catch (e) {
       // ignore: avoid_print
       print('Error: $e');
+      setError('Failed to load data');
+      reviewAdded.value = false;
+      isLoading(false);
+      setError('Failed to load data. Check your internet connection.');
+      reviewAdded.value = false;
+      // ignore: avoid_print
+      print('Error in fetchRestaurantDetail: $e');
+    } finally {
+      isLoading(false);
+      update();
     }
   }
 
@@ -66,6 +100,23 @@ class DetailController extends GetxController {
     } catch (e) {
       // ignore: avoid_print
       print('Error adding review: $e');
+    }
+  }
+
+  void resetReviewAdded() {
+    reviewAdded.value = false;
+  }
+
+  // ignore: unused_element
+  Future<void> _refresh() async {
+    try {
+      isLoading(true);
+      error('');
+      await fetchRestaurantDetail(restaurant.value.id);
+    } catch (e) {
+      debugPrint('Error in _refresh: $e');
+    } finally {
+      isLoading(false);
     }
   }
 }
