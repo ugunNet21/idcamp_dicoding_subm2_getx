@@ -27,7 +27,7 @@ class AddReviewController extends GetxController {
         Get.showSnackbar(
           const GetSnackBar(
             message: 'Review added successfully',
-            duration: Duration(seconds: 20),
+            duration: Duration(seconds: 10),
           ),
         );
         Get.until((route) => Get.currentRoute == AppRoutes.home);
@@ -37,7 +37,7 @@ class AddReviewController extends GetxController {
       Get.showSnackbar(
         const GetSnackBar(
           message: 'Failed to add review',
-          duration: Duration(seconds: 2),
+          duration: Duration(seconds: 5),
         ),
       );
     }

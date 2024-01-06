@@ -12,7 +12,7 @@ class HomeController extends GetxController {
   var restaurants = <Restaurant>[].obs;
 
   HomeController({required this.apiService});
-   void showSnackbarError(String errorMessage) {
+  void showSnackbarError(String errorMessage) {
     Get.snackbar(
       'Try Again',
       errorMessage,
@@ -52,6 +52,7 @@ class HomeController extends GetxController {
                   categories: [],
                   menus: Menus(foods: [], drinks: []),
                   customerReviews: [],
+                  address: '',
                 ))
             .toList());
       }

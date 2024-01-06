@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_subm2_getx/models/restaurant.dart';
+import 'package:flutter_subm2_getx/themes/themes.dart';
 // ignore: depend_on_referenced_packages
 import 'package:get/get.dart';
 import 'package:flutter_subm2_getx/modules/search/search_controller.dart'
     // ignore: library_prefixes
     as MySearchController;
-// import 'package:flutter_subm2_getx/models/restaurant.dart';
 
 class SearchView extends StatelessWidget {
   final MySearchController.SearchController controller = Get.find();
@@ -18,7 +18,8 @@ class SearchView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Search Restaurants'),
+        title: Text('Search Restaurants',
+            style: orangeTextStyle.copyWith(fontSize: 16, fontWeight: bold)),
       ),
       body: Form(
         key: _formKey,
@@ -81,4 +82,3 @@ class SearchView extends StatelessWidget {
     );
   }
 }
-

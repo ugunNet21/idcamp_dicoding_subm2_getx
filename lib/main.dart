@@ -7,6 +7,7 @@ void main() {
   WidgetsFlutterBinding.ensureInitialized();
   runApp(
     GetMaterialApp(
+      debugShowCheckedModeBanner: false,
       title: 'Finder Resto',
       initialRoute: AppRoutes.home,
       getPages: AppPages.pages,

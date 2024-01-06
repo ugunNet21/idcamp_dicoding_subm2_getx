@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_subm2_getx/modules/review/add_review_controller.dart';
+import 'package:flutter_subm2_getx/themes/themes.dart';
 // ignore: depend_on_referenced_packages
 import 'package:get/get.dart';
 
@@ -18,7 +19,9 @@ class AddReviewView extends StatelessWidget {
       builder: (controller) {
         return Scaffold(
           appBar: AppBar(
-            title: const Text('Add Review'),
+            title: Text('Add Review',
+                style:
+                    orangeTextStyle.copyWith(fontSize: 16, fontWeight: medium)),
           ),
           body: Padding(
             padding: const EdgeInsets.all(8.0),
@@ -46,22 +49,25 @@ class AddReviewView extends StatelessWidget {
                   decoration: const InputDecoration(labelText: 'Your Review'),
                 ),
                 const SizedBox(height: 16),
-                ElevatedButton(
-                  onPressed: () async {
-                    if (nameController.text.isEmpty ||
-                        reviewController.text.isEmpty) {
-                      Get.snackbar('Error', 'Please fill in all fields');
-                    } else {
-                      // Melakukan penambahan ulasan jika tidak ada field yang kosong
-                      await controller.addReview(
-                        restaurantId,
-                        nameController.text,
-                        reviewController.text,
-                      );
-                      Get.back(result: true);
-                    }
-                  },
-                  child: const Text('Submit Review'),
+                Center(
+                  child: ElevatedButton(
+                    onPressed: () async {
+                      if (nameController.text.isEmpty ||
+                          reviewController.text.isEmpty) {
+                        Get.snackbar('Error', 'Please fill in all fields');
+                      } else {
+                        await controller.addReview(
+                          restaurantId,
+                          nameController.text,
+                          reviewController.text,
+                        );
+                        Get.back(result: true);
+                      }
+                    },
+                    child: Text('Submit Review',
+                        style: blackTextStyle.copyWith(
+                            fontSize: 14, fontWeight: medium)),
+                  ),
                 ),
               ],
             ),

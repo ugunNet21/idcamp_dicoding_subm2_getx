@@ -24,11 +24,14 @@ class ApiService {
       }
 
       if (response.statusCode == 200 || response.statusCode == 201) {
+        // print('Response: ${response.body}');
         return json.decode(response.body);
       } else {
+        // print('Failed to load data. Status code: ${response.statusCode}');
         throw Exception('Failed to load data');
       }
     } catch (e) {
+      // print('Error during data fetching: $e');
       throw Exception('Error: $e');
     }
   }

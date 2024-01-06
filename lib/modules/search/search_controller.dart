@@ -54,7 +54,8 @@ class SearchController extends GetxController {
                 rating: data['rating'].toDouble(),
                 categories: [],
                 menus: Menus(foods: [], drinks: []),
-                customerReviews: [],
+                customerReviews: [], address: '',
+                
               ))
           .toList());
     } catch (e) {

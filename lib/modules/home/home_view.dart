@@ -1,19 +1,26 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_subm2_getx/modules/home/home_controller.dart';
+import 'package:flutter_subm2_getx/modules/navigation/bottom_nav_controller.dart';
 import 'package:flutter_subm2_getx/routes/app_routes.dart';
+import 'package:flutter_subm2_getx/themes/themes.dart';
 // ignore: depend_on_referenced_packages
 import 'package:get/get.dart';
 
 class HomeView extends StatelessWidget {
   final HomeController controller = Get.find();
+  final BottomNavigationController bottomNavigationController =
+      Get.put(BottomNavigationController());
 
-   HomeView({super.key});
+  HomeView({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Restaurant List'),
+        title: Text(
+          'Restaurant List',
+          style: orangeTextStyle.copyWith(fontSize: 18, fontWeight: bold),
+        ),
         actions: [
           IconButton(
             icon: const Icon(Icons.search),
@@ -71,12 +78,18 @@ class HomeView extends StatelessWidget {
             final restaurant = controller.restaurants[index];
             return Card(
               child: ListTile(
-                title: Text(restaurant.name),
+                title: Text(restaurant.name,
+                    style: blackTextStyle.copyWith(
+                        fontSize: 14, fontWeight: bold)),
                 subtitle: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text('City: ${restaurant.city}'),
-                    Text('Rating: ${restaurant.rating.toString()}'),
+                    Text('City: ${restaurant.city}',
+                        style: blackTextStyle.copyWith(
+                            fontSize: 12, fontWeight: medium)),
+                    Text('Rating: ${restaurant.rating.toString()}',
+                        style: blackTextStyle.copyWith(
+                            fontSize: 12, fontWeight: medium)),
                   ],
                 ),
                 leading: ClipRRect(
