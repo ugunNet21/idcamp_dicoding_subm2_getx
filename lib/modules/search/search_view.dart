@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_subm2_getx/models/restaurant.dart';
 import 'package:flutter_subm2_getx/themes/themes.dart';
-// ignore: depend_on_referenced_packages
 import 'package:get/get.dart';
 import 'package:flutter_subm2_getx/modules/search/search_controller.dart'
     // ignore: library_prefixes
@@ -19,7 +18,7 @@ class SearchView extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text('Search Restaurants',
-            style: orangeTextStyle.copyWith(fontSize: 16, fontWeight: bold)),
+            style: blackTextStyle.copyWith(fontSize: 16, fontWeight: bold)),
       ),
       body: Form(
         key: _formKey,

@@ -1,6 +1,5 @@
 import 'package:flutter_subm2_getx/models/restaurant.dart';
 import 'package:flutter_subm2_getx/services/api_service.dart';
-// ignore: depend_on_referenced_packages
 import 'package:get/get.dart';
 
 class DetailController extends GetxController {

@@ -1,12 +1,20 @@
+import 'package:flutter_subm2_getx/modules/account/account_screen.dart';
+import 'package:flutter_subm2_getx/modules/chat/chat_screen.dart';
 import 'package:flutter_subm2_getx/modules/detail/detail_bindings.dart';
 import 'package:flutter_subm2_getx/modules/detail/detail_view.dart';
 import 'package:flutter_subm2_getx/modules/home/home_bindings.dart';
 import 'package:flutter_subm2_getx/modules/home/home_view.dart';
+import 'package:flutter_subm2_getx/modules/login/login_screen.dart';
+import 'package:flutter_subm2_getx/modules/navigation/bottom_bindings.dart';
+import 'package:flutter_subm2_getx/modules/navigation/bottom_navigation.dart';
+import 'package:flutter_subm2_getx/modules/order/order_screen.dart';
 import 'package:flutter_subm2_getx/modules/review/add_review_bindings.dart';
 import 'package:flutter_subm2_getx/modules/review/add_review_view.dart';
 import 'package:flutter_subm2_getx/modules/search/search_bindings.dart';
 import 'package:flutter_subm2_getx/modules/search/search_view.dart';
-// ignore: depend_on_referenced_packages
+import 'package:flutter_subm2_getx/modules/splash/splash_screen.dart';
+import 'package:flutter_subm2_getx/widgets/review_failed_page.dart';
+import 'package:flutter_subm2_getx/widgets/review_success_page.dart';
 import 'package:get/get.dart';
 import 'app_routes.dart';
 
@@ -16,6 +24,31 @@ class AppPages {
       name: AppRoutes.home,
       page: () => HomeView(),
       binding: HomeBindings(),
+    ),
+    GetPage(
+      name: AppRoutes.splash,
+      page: () => const SplashScreen(),
+    ),
+    GetPage(
+      name: AppRoutes.login,
+      page: () => const LoginScreen(),
+    ),
+    GetPage(
+      name: AppRoutes.bottomNav,
+      page: () => const BottomNavigationScreen(),
+      binding: BottomBindings(),
+    ),
+    GetPage(
+      name: AppRoutes.order,
+      page: () => const OrderScreen(),
+    ),
+    GetPage(
+      name: AppRoutes.chat,
+      page: () => const ChatScreen(),
+    ),
+    GetPage(
+      name: AppRoutes.account,
+      page: () => const AccountScreen(),
     ),
     GetPage(
       name: AppRoutes.detail,
@@ -31,6 +64,14 @@ class AppPages {
       name: AppRoutes.addReview,
       page: () => AddReviewView(),
       binding: AddReviewBindings(),
+    ),
+    GetPage(
+      name: AppRoutes.reviewSuccess,
+      page: () => const ReviewSuccessView(),
+    ),
+    GetPage(
+      name: AppRoutes.reviewSuccess,
+      page: () => const ReviewFailedView(),
     ),
   ];
 }

@@ -3,7 +3,6 @@ import 'package:flutter_subm2_getx/models/restaurant.dart';
 import 'package:flutter_subm2_getx/modules/detail/detail_controller.dart';
 import 'package:flutter_subm2_getx/routes/app_routes.dart';
 import 'package:flutter_subm2_getx/themes/themes.dart';
-// ignore: depend_on_referenced_packages
 import 'package:get/get.dart';
 
 class DetailView extends StatelessWidget {
@@ -19,7 +18,7 @@ class DetailView extends StatelessWidget {
       appBar: AppBar(
         title: Text(
           'Restaurant Detail',
-          style: orangeTextStyle.copyWith(fontSize: 16, fontWeight: bold),
+          style: blackTextStyle.copyWith(fontSize: 16, fontWeight: bold),
         ),
         actions: [
           IconButton(

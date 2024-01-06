@@ -3,7 +3,6 @@ import 'package:flutter_subm2_getx/modules/home/home_controller.dart';
 import 'package:flutter_subm2_getx/modules/navigation/bottom_nav_controller.dart';
 import 'package:flutter_subm2_getx/routes/app_routes.dart';
 import 'package:flutter_subm2_getx/themes/themes.dart';
-// ignore: depend_on_referenced_packages
 import 'package:get/get.dart';
 
 class HomeView extends StatelessWidget {
@@ -19,7 +18,7 @@ class HomeView extends StatelessWidget {
       appBar: AppBar(
         title: Text(
           'Restaurant List',
-          style: orangeTextStyle.copyWith(fontSize: 18, fontWeight: bold),
+          style: blackTextStyle.copyWith(fontSize: 18, fontWeight: bold),
         ),
         actions: [
           IconButton(

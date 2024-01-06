@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_subm2_getx/modules/review/add_review_controller.dart';
-import 'package:flutter_subm2_getx/themes/themes.dart';
-// ignore: depend_on_referenced_packages
+import 'package:flutter_subm2_getx/routes/app_routes.dart';
 import 'package:get/get.dart';
 
 class AddReviewView extends StatelessWidget {
@@ -19,9 +18,7 @@ class AddReviewView extends StatelessWidget {
       builder: (controller) {
         return Scaffold(
           appBar: AppBar(
-            title: Text('Add Review',
-                style:
-                    orangeTextStyle.copyWith(fontSize: 16, fontWeight: medium)),
+            title: const Text('Add Review'),
           ),
           body: Padding(
             padding: const EdgeInsets.all(8.0),
@@ -49,25 +46,25 @@ class AddReviewView extends StatelessWidget {
                   decoration: const InputDecoration(labelText: 'Your Review'),
                 ),
                 const SizedBox(height: 16),
-                Center(
-                  child: ElevatedButton(
-                    onPressed: () async {
-                      if (nameController.text.isEmpty ||
-                          reviewController.text.isEmpty) {
-                        Get.snackbar('Error', 'Please fill in all fields');
+                ElevatedButton(
+                  onPressed: () async {
+                    if (nameController.text.isEmpty ||
+                        reviewController.text.isEmpty) {
+                      Get.snackbar('Error', 'Please fill in all fields');
+                    } else {
+                      await controller.addReview(
+                        restaurantId,
+                        nameController.text,
+                        reviewController.text,
+                      );
+                      if (controller.status.value == true) {
+                        Get.offNamed(AppRoutes.reviewSuccess);
                       } else {
-                        await controller.addReview(
-                          restaurantId,
-                          nameController.text,
-                          reviewController.text,
-                        );
-                        Get.back(result: true);
+                        Get.offNamed(AppRoutes.reviewFailed);
                       }
-                    },
-                    child: Text('Submit Review',
-                        style: blackTextStyle.copyWith(
-                            fontSize: 14, fontWeight: medium)),
-                  ),
+                    }
+                  },
+                  child: const Text('Submit Review'),
                 ),
               ],
             ),

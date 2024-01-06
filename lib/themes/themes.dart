@@ -42,6 +42,10 @@ TextStyle greenTextStyle = GoogleFonts.poppins(
   color: greenColor,
 );
 
+TextStyle purpleTextStyle = GoogleFonts.poppins(
+  color: purpleColor,
+);
+
 // size fonts
 FontWeight light = FontWeight.w300;
 FontWeight reguler = FontWeight.w400;

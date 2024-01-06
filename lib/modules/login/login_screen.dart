@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_subm2_getx/modules/navigation/bottom_navigation.dart';
+import 'package:flutter_subm2_getx/routes/app_routes.dart';
+import 'package:get/get.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -44,24 +45,14 @@ class _LoginScreenState extends State<LoginScreen> {
               const SizedBox(height: 16.0),
               ElevatedButton(
                 onPressed: () {
-                  Navigator.pushReplacement(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) =>
-                            const BottomNavigationScreen(initialIndex: 0)),
-                  );
+                  Get.offNamed(AppRoutes.bottomNav);
                 },
                 child: const Text('Login'),
               ),
               const SizedBox(height: 16.0),
               ElevatedButton(
                 onPressed: () {
-                  Navigator.pushReplacement(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) =>
-                            const BottomNavigationScreen(initialIndex: 0)),
-                  );
+                  Get.offNamed(AppRoutes.bottomNav);
                 },
                 child: Row(
                   mainAxisSize: MainAxisSize.min,
@@ -79,12 +70,7 @@ class _LoginScreenState extends State<LoginScreen> {
               const SizedBox(height: 16.0),
               ElevatedButton(
                 onPressed: () {
-                  Navigator.pushReplacement(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) =>
-                            const BottomNavigationScreen(initialIndex: 0)),
-                  );
+                  Get.offNamed(AppRoutes.bottomNav);
                 },
                 child: Row(
                   mainAxisSize: MainAxisSize.min,

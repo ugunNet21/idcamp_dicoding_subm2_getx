@@ -1,61 +1,62 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_subm2_getx/modules/account/account_screen.dart';
+import 'package:flutter_subm2_getx/modules/chat/chat_screen.dart';
 import 'package:flutter_subm2_getx/modules/home/home_view.dart';
-import 'package:flutter_subm2_getx/modules/search/search_view.dart';
+import 'package:flutter_subm2_getx/modules/navigation/bottom_nav_controller.dart';
+import 'package:flutter_subm2_getx/modules/order/order_screen.dart';
+import 'package:flutter_subm2_getx/themes/themes.dart';
+import 'package:get/get.dart';
 
 class BottomNavigationScreen extends StatefulWidget {
-  final int initialIndex;
-
-  const BottomNavigationScreen({Key? key, required this.initialIndex})
-      : super(key: key);
+  const BottomNavigationScreen({super.key});
 
   @override
-  // ignore: library_private_types_in_public_api
-  _BottomNavigationScreenState createState() => _BottomNavigationScreenState();
+  State<BottomNavigationScreen> createState() => _BottomNavigationScreenState();
 }
 
 class _BottomNavigationScreenState extends State<BottomNavigationScreen> {
-  int _currentIndex = 0;
-  final List<Widget> _screens = [HomeView(), SearchView()];
+  final BottomNavigationController controller =
+      Get.put(BottomNavigationController());
 
-  @override
-  void initState() {
-    super.initState();
-    _currentIndex = widget.initialIndex;
-  }
+  final List<Widget> _screens = [
+    HomeView(),
+    const ChatScreen(),
+    const OrderScreen(),
+    const AccountScreen(),
+  ];
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: _screens[_currentIndex],
-      bottomNavigationBar: BottomNavigationBar(
-        currentIndex: _currentIndex,
-        onTap: (index) {
-          setState(() {
-            _currentIndex = index;
-          });
-        },
-        selectedItemColor: Colors.red,
-        unselectedItemColor: Colors.grey,
-        showUnselectedLabels: true,
-        items: const [
-          BottomNavigationBarItem(
-            icon: Icon(Icons.home),
-            label: 'Home',
+        body: Obx(() => _screens[controller.currentIndex.value]),
+        bottomNavigationBar: Obx(
+          () => BottomNavigationBar(
+            currentIndex: controller.currentIndex.value,
+            onTap: (index) {
+              controller.changePage(index);
+            },
+            selectedItemColor: redColor,
+            unselectedItemColor: greyColor,
+            showUnselectedLabels: true,
+            items: const [
+              BottomNavigationBarItem(
+                icon: Icon(Icons.home),
+                label: 'Home',
+              ),
+              BottomNavigationBarItem(
+                icon: Icon(Icons.chat),
+                label: 'Chat',
+              ),
+              BottomNavigationBarItem(
+                icon: Icon(Icons.shopping_cart),
+                label: 'Order',
+              ),
+              BottomNavigationBarItem(
+                icon: Icon(Icons.account_circle),
+                label: 'Account',
+              ),
+            ],
           ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.chat),
-            label: 'Chat',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.shopping_cart),
-            label: 'Order',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.account_circle),
-            label: 'Account',
-          ),
-        ],
-      ),
-    );
+        ));
   }
 }

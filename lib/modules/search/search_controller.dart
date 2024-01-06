@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_subm2_getx/models/restaurant.dart';
 import 'package:flutter_subm2_getx/routes/app_routes.dart';
 import 'package:flutter_subm2_getx/services/api_service.dart';
-// ignore: depend_on_referenced_packages
 import 'package:get/get.dart';
 
 class SearchController extends GetxController {

@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_subm2_getx/routes/app_routes.dart';
-// ignore: depend_on_referenced_packages
 import 'package:get/get.dart';
 import 'package:flutter_subm2_getx/services/api_service.dart';
 
 class AddReviewController extends GetxController {
   final ApiService apiService;
+  var status = false.obs;
 
   AddReviewController({
     required this.apiService,
@@ -27,10 +27,12 @@ class AddReviewController extends GetxController {
         Get.showSnackbar(
           const GetSnackBar(
             message: 'Review added successfully',
-            duration: Duration(seconds: 10),
+            duration: Duration(seconds: 5),
           ),
         );
-        Get.until((route) => Get.currentRoute == AppRoutes.home);
+        status.value = true;
+        // Get.until((route) => Get.currentRoute == AppRoutes.reviewSuccess);
+        Get.offAllNamed(AppRoutes.reviewSuccess);
       }
     } catch (e) {
       debugPrint('Error: $e');
@@ -40,6 +42,7 @@ class AddReviewController extends GetxController {
           duration: Duration(seconds: 5),
         ),
       );
+      status.value = false;
     }
   }
 }
