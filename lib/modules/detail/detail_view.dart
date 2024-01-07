@@ -13,7 +13,6 @@ class DetailView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // print('Restaurant in DetailView: ${controller.restaurant}');
     return Scaffold(
       appBar: AppBar(
         title: Text(
@@ -41,7 +40,7 @@ class DetailView extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Text(
-                    'Failed to load restaurant detail. check internet connections',
+                    'Failed to load restaurant detail. Check internet connection',
                     style: blackTextStyle.copyWith(
                         fontSize: 10, fontWeight: medium),
                   ),
@@ -70,7 +69,8 @@ class DetailView extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           const SizedBox(height: 16),
-          ClipRect(
+          ClipRRect(
+            borderRadius: BorderRadius.circular(12.0),
             child: Image.network(
               'https://restaurant-api.dicoding.dev/images/small/${restaurant.pictureId}',
               width: double.infinity,
@@ -81,48 +81,93 @@ class DetailView extends StatelessWidget {
           const SizedBox(height: 16),
           Text(
             'Restaurant : ${restaurant.name}',
-            style: blackTextStyle.copyWith(fontSize: 16, fontWeight: bold),
+            style: blackTextStyle.copyWith(fontSize: 18, fontWeight: bold),
           ),
           const SizedBox(height: 16),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 16.0),
             child: ExpansionTile(
-              title: Text('Description',
-                  style:
-                      blackTextStyle.copyWith(fontSize: 16, fontWeight: bold)),
+              title: Text(
+                'Description',
+                style: blackTextStyle.copyWith(fontSize: 18, fontWeight: bold),
+              ),
               children: [
                 Text(
                   controller.restaurant.value.description,
                   style:
-                      blackTextStyle.copyWith(fontSize: 14, fontWeight: medium),
+                      blackTextStyle.copyWith(fontSize: 16, fontWeight: medium),
                   textAlign: TextAlign.justify,
                 ),
               ],
             ),
           ),
-          // Text('Description: ${restaurant.description}'),
           const SizedBox(height: 16),
           Text(
             'City: ${restaurant.city}',
-            style: blackTextStyle.copyWith(fontSize: 14, fontWeight: medium),
+            style: blackTextStyle.copyWith(fontSize: 16, fontWeight: medium),
           ),
           const SizedBox(height: 16),
-          Text('Address: ${restaurant.address}',
-              style: blackTextStyle.copyWith(fontSize: 14, fontWeight: medium)),
+          Row(
+            children: [
+              const Icon(Icons.location_city, size: 18),
+              const SizedBox(width: 8),
+              Text(
+                'Address: ${restaurant.address}',
+                style:
+                    blackTextStyle.copyWith(fontSize: 16, fontWeight: medium),
+              ),
+            ],
+          ),
           const SizedBox(height: 16),
-          Text('Rating: ${restaurant.rating}',
-              style: blackTextStyle.copyWith(fontSize: 14, fontWeight: medium)),
+          Row(
+            children: [
+              const Icon(Icons.star, size: 18),
+              const SizedBox(width: 8),
+              Text(
+                'Rating: ${restaurant.rating}',
+                style:
+                    blackTextStyle.copyWith(fontSize: 16, fontWeight: medium),
+              ),
+            ],
+          ),
           const SizedBox(height: 16),
-          Text('Categories:',
-              style: blackTextStyle.copyWith(fontSize: 14, fontWeight: medium)),
+          Row(
+            children: [
+              const Icon(Icons.category, size: 18),
+              const SizedBox(width: 8),
+              Text(
+                'Categories:',
+                style:
+                    blackTextStyle.copyWith(fontSize: 16, fontWeight: medium),
+              ),
+            ],
+          ),
           _buildCategoryList(restaurant.categories),
           const SizedBox(height: 16),
-          Text('Menus:',
-              style: blackTextStyle.copyWith(fontSize: 14, fontWeight: medium)),
+          Row(
+            children: [
+              const Icon(Icons.restaurant_menu, size: 18),
+              const SizedBox(width: 8),
+              Text(
+                'Menus:',
+                style:
+                    blackTextStyle.copyWith(fontSize: 16, fontWeight: medium),
+              ),
+            ],
+          ),
           _buildMenuList(restaurant.menus),
           const SizedBox(height: 16),
-          Text('Customer Reviews:',
-              style: blackTextStyle.copyWith(fontSize: 14, fontWeight: medium)),
+          Row(
+            children: [
+              const Icon(Icons.reviews, size: 18),
+              const SizedBox(width: 8),
+              Text(
+                'Customer Reviews:',
+                style:
+                    blackTextStyle.copyWith(fontSize: 16, fontWeight: medium),
+              ),
+            ],
+          ),
           _buildCustomerReviewsList(restaurant.customerReviews),
         ],
       ),
@@ -145,11 +190,11 @@ class DetailView extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text('Foods:',
-            style: blackTextStyle.copyWith(fontSize: 14, fontWeight: medium)),
+            style: blackTextStyle.copyWith(fontSize: 16, fontWeight: medium)),
         _buildItemList(menus.foods.map((food) => food.name).toList()),
         const SizedBox(height: 8),
         Text('Drinks:',
-            style: blackTextStyle.copyWith(fontSize: 14, fontWeight: medium)),
+            style: blackTextStyle.copyWith(fontSize: 16, fontWeight: medium)),
         _buildItemList(menus.drinks.map((drink) => drink.name).toList()),
       ],
     );
@@ -168,7 +213,7 @@ class DetailView extends StatelessWidget {
       children: reviews
           .map((review) => Text(
               '${review.name}: ${review.review} (${review.date})',
-              style: blackTextStyle.copyWith(fontSize: 14, fontWeight: medium)))
+              style: blackTextStyle.copyWith(fontSize: 16, fontWeight: medium)))
           .toList(),
     );
   }
