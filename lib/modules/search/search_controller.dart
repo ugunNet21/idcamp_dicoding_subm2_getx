@@ -9,6 +9,7 @@ import 'package:get/get.dart';
 class SearchController extends GetxController {
   var searchResults = <Restaurant>[].obs;
   final ApiService apiService;
+  var isLoading = false.obs;
   var error = ''.obs;
 
   SearchController({required this.apiService});
@@ -16,8 +17,9 @@ class SearchController extends GetxController {
     error(errorMessage);
   }
 
-  void searchRestaurants(String query) async {
+  Future<void> searchRestaurants(String query) async {
     try {
+      isLoading(true);
       error('');
       if (!await checkInternetConnection()) {
         showSnackbarInfo('Tidak ada koneksi internet.');
@@ -53,13 +55,15 @@ class SearchController extends GetxController {
                 rating: data['rating'].toDouble(),
                 categories: [],
                 menus: Menus(foods: [], drinks: []),
-                customerReviews: [], address: '',
-                
+                customerReviews: [],
+                address: '',
               ))
           .toList());
     } catch (e) {
       // ignore: avoid_print
       print('Error: $e');
+    } finally {
+      isLoading(false);
     }
   }
 

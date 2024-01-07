@@ -38,9 +38,12 @@ class SearchView extends StatelessWidget {
                   labelText: 'Search',
                   suffixIcon: IconButton(
                     icon: const Icon(Icons.search),
-                    onPressed: () {
+                    onPressed: () async {
                       if (_formKey.currentState!.validate()) {
-                        controller.searchRestaurants(searchController.text);
+                        controller.isLoading(true);
+                        await controller
+                            .searchRestaurants(searchController.text);
+                        controller.isLoading(false);
                       }
                     },
                   ),
@@ -48,15 +51,21 @@ class SearchView extends StatelessWidget {
               ),
             ),
             Obx(
-              () => Expanded(
-                child: ListView.builder(
-                  itemCount: controller.searchResults.length,
-                  itemBuilder: (context, index) {
-                    final restaurant = controller.searchResults[index];
-                    return buildSearchResultItem(restaurant);
-                  },
-                ),
-              ),
+              () {
+                if (controller.isLoading.value) {
+                  return const CircularProgressIndicator();
+                } else {
+                  return Expanded(
+                    child: ListView.builder(
+                      itemCount: controller.searchResults.length,
+                      itemBuilder: (context, index) {
+                        final restaurant = controller.searchResults[index];
+                        return buildSearchResultItem(restaurant);
+                      },
+                    ),
+                  );
+                }
+              },
             ),
             if (controller.error.value.contains('No internet connection.'))
               ElevatedButton(
