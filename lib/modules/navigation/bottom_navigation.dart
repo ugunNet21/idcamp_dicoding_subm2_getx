@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_subm2_getx/modules/account/account_screen.dart';
 import 'package:flutter_subm2_getx/modules/chat/chat_screen.dart';
+import 'package:flutter_subm2_getx/modules/favorite/favorite_screen.dart';
 import 'package:flutter_subm2_getx/modules/home/home_view.dart';
 import 'package:flutter_subm2_getx/modules/navigation/bottom_nav_controller.dart';
 import 'package:flutter_subm2_getx/modules/order/order_screen.dart';
@@ -22,6 +23,7 @@ class _BottomNavigationScreenState extends State<BottomNavigationScreen> {
     HomeView(),
     const ChatScreen(),
     const OrderScreen(),
+      FavoriteView(),
     const AccountScreen(),
   ];
 
@@ -50,6 +52,10 @@ class _BottomNavigationScreenState extends State<BottomNavigationScreen> {
               BottomNavigationBarItem(
                 icon: Icon(Icons.shopping_cart),
                 label: 'Order',
+              ),
+              BottomNavigationBarItem(
+                icon: Icon(Icons.favorite),
+                label: 'Favorite',
               ),
               BottomNavigationBarItem(
                 icon: Icon(Icons.account_circle),

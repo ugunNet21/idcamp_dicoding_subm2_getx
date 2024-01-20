@@ -2,6 +2,8 @@ import 'package:flutter_subm2_getx/modules/account/account_screen.dart';
 import 'package:flutter_subm2_getx/modules/chat/chat_screen.dart';
 import 'package:flutter_subm2_getx/modules/detail/detail_bindings.dart';
 import 'package:flutter_subm2_getx/modules/detail/detail_view.dart';
+import 'package:flutter_subm2_getx/modules/favorite/favorite_bindings.dart';
+import 'package:flutter_subm2_getx/modules/favorite/favorite_screen.dart';
 import 'package:flutter_subm2_getx/modules/home/home_bindings.dart';
 import 'package:flutter_subm2_getx/modules/home/home_view.dart';
 import 'package:flutter_subm2_getx/modules/login/login_screen.dart';
@@ -43,6 +45,11 @@ class AppPages {
       page: () => const OrderScreen(),
     ),
     GetPage(
+      name: AppRoutes.favorite,
+      page: () =>    FavoriteView(),
+      binding: FavoriteBindings(),
+    ),
+    GetPage(
       name: AppRoutes.chat,
       page: () => const ChatScreen(),
     ),
@@ -70,7 +77,7 @@ class AppPages {
       page: () => const ReviewSuccessView(),
     ),
     GetPage(
-      name: AppRoutes.reviewSuccess,
+      name: AppRoutes.reviewFailed,
       page: () => const ReviewFailedView(),
     ),
   ];

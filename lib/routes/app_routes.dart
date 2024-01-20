@@ -3,6 +3,7 @@ abstract class AppRoutes {
   static const account = '/account';
   static const chat = '/chat';
   static const order = '/order';
+  static const favorite = '/favorite';
   static const splash = '/splash';
   static const login = '/login';
   static const bottomNav = '/bottomNav';

@@ -1,3 +1,8 @@
+import 'package:json_annotation/json_annotation.dart';
+
+part 'restaurant.g.dart';
+
+@JsonSerializable()
 class Restaurant {
   final String id;
   final String name;
@@ -30,7 +35,7 @@ class Restaurant {
       pictureId: json['pictureId'],
       city: json['city'],
       address: json['address'],
-      rating: (json['rating'] as num).toDouble(), // Konversi ke double
+      rating: (json['rating'] as num).toDouble(), 
       categories: (json['categories'] as List<dynamic>)
           .map((category) => Category.fromJson(category))
           .toList(),
@@ -42,6 +47,7 @@ class Restaurant {
   }
 }
 
+@JsonSerializable()
 class Category {
   final String name;
 
@@ -54,6 +60,7 @@ class Category {
   }
 }
 
+@JsonSerializable()
 class Menus {
   final List<Food> foods;
   final List<Drink> drinks;
@@ -72,6 +79,7 @@ class Menus {
   }
 }
 
+@JsonSerializable()
 class Drink {
   final String name;
 
@@ -84,6 +92,7 @@ class Drink {
   }
 }
 
+@JsonSerializable()
 class MenuItem {
   final String name;
 
@@ -96,6 +105,7 @@ class MenuItem {
   }
 }
 
+@JsonSerializable()
 class Food {
   final String name;
 
@@ -108,6 +118,7 @@ class Food {
   }
 }
 
+@JsonSerializable()
 class CustomerReview {
   final String name;
   final String review;

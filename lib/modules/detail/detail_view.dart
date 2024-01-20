@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_subm2_getx/models/restaurant.dart';
 import 'package:flutter_subm2_getx/modules/detail/detail_controller.dart';
+import 'package:flutter_subm2_getx/modules/favorite/favorite_controller.dart';
 import 'package:flutter_subm2_getx/routes/app_routes.dart';
 import 'package:flutter_subm2_getx/themes/themes.dart';
 import 'package:get/get.dart';
 
 class DetailView extends StatelessWidget {
   final DetailController controller = Get.find();
+  final FavoriteController _controller = Get.find();
   final String restaurantId = Get.arguments;
 
   DetailView({super.key});
@@ -26,6 +28,25 @@ class DetailView extends StatelessWidget {
               Get.toNamed(AppRoutes.addReview, arguments: restaurantId);
             },
           ),
+          Obx(() {
+            final isFavorite =
+                _controller.isRestaurantFavorite(controller.restaurant.value);
+            return IconButton(
+              icon: Icon(
+                isFavorite ? Icons.favorite : Icons.favorite_border,
+                color: isFavorite ? Colors.red : null,
+              ),
+              onPressed: () async {
+                if (isFavorite) {
+                  await _controller
+                      .removeFromFavorites(controller.restaurant.value);
+                } else {
+                  await _controller.addToFavorites(controller.restaurant.value);
+                }
+                _controller.update();
+              },
+            );
+          }),
         ],
       ),
       body: Obx(
