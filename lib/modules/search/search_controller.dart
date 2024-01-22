@@ -22,7 +22,7 @@ class SearchController extends GetxController {
       isLoading(true);
       error('');
       if (!await checkInternetConnection()) {
-        showSnackbarInfo('Tidak ada koneksi internet.');
+        showSnackbarInfo('No internet connection.');
         return;
       }
 
@@ -34,14 +34,14 @@ class SearchController extends GetxController {
       final result = await apiService.searchRestaurants(query);
       if (result['error']) {
         debugPrint('Error: ${result['message']}');
-        showSnackbarError('Terjadi kesalahan. Silakan coba lagi.');
+        showSnackbarError('Please try another search again.');
         return;
       }
 
       final List<dynamic> restaurantData = result['restaurants'];
       if (restaurantData.isEmpty) {
         debugPrint('No matching restaurants found');
-        showSnackbarInfo('Tidak ada restoran yang cocok.');
+        showSnackbarInfo('No matching restaurants found.');
         return;
       }
 
@@ -60,8 +60,7 @@ class SearchController extends GetxController {
               ))
           .toList());
     } catch (e) {
-      // ignore: avoid_print
-      print('Error: $e');
+      debugPrint('Search error: $e');
     } finally {
       isLoading(false);
     }

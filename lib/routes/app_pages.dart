@@ -1,4 +1,5 @@
-import 'package:flutter_subm2_getx/modules/account/account_screen.dart';
+import 'package:flutter_subm2_getx/modules/settings/setting_bindings.dart';
+import 'package:flutter_subm2_getx/modules/settings/setting_screen.dart';
 import 'package:flutter_subm2_getx/modules/chat/chat_screen.dart';
 import 'package:flutter_subm2_getx/modules/detail/detail_bindings.dart';
 import 'package:flutter_subm2_getx/modules/detail/detail_view.dart';
@@ -54,8 +55,9 @@ class AppPages {
       page: () => const ChatScreen(),
     ),
     GetPage(
-      name: AppRoutes.account,
-      page: () => const AccountScreen(),
+      name: AppRoutes.setting,
+      page: () =>  SettingScreen(),
+      binding: SettingBindings(),
     ),
     GetPage(
       name: AppRoutes.detail,

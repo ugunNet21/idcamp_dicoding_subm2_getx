@@ -22,40 +22,41 @@ class ApiService {
       }
 
       if (response.statusCode == 200 || response.statusCode == 201) {
-        // print('Response: ${response.body}');
         return json.decode(response.body);
       } else {
-        // print('Failed to load data. Status code: ${response.statusCode}');
-        throw Exception('Failed to load data');
+        throw Exception('Failed to load data: Status code: ${response.statusCode}');
       }
     } catch (e) {
-      // print('Error during data fetching: $e');
       throw Exception('Error: $e');
     }
   }
 
   Future<Map<String, dynamic>> searchRestaurants(String query) async {
-    final response = await http.get(Uri.parse('$baseUrl/search?q=$query'));
+    try {
+      final response = await http.get(Uri.parse('$baseUrl/search?q=$query'));
 
-    if (response.statusCode == 200) {
-      final Map<String, dynamic> responseData = json.decode(response.body);
-      final List<dynamic> restaurantsData = responseData['restaurants'];
-      if (restaurantsData.isEmpty) {
-        return {'error': true, 'message': 'Restaurants not found'};
+      if (response.statusCode == 200) {
+        final Map<String, dynamic> responseData = json.decode(response.body);
+        final List<dynamic> restaurantsData = responseData['restaurants'];
+        if (restaurantsData.isEmpty) {
+          return {'error': true, 'message': 'Restaurants not found'};
+        }
+        final List<Map<String, dynamic>> mappedRestaurants = restaurantsData
+            .map((data) => {
+                  'id': data['id'],
+                  'name': data['name'],
+                  'description': data['description'],
+                  'pictureId': data['pictureId'],
+                  'city': data['city'],
+                  'rating': data['rating'],
+                })
+            .toList();
+        return {'error': false, 'restaurants': mappedRestaurants};
+      } else {
+        throw Exception('Failed to search restaurants. Status code: ${response.statusCode}');
       }
-      final List<Map<String, dynamic>> mappedRestaurants = restaurantsData
-          .map((data) => {
-                'id': data['id'],
-                'name': data['name'],
-                'description': data['description'],
-                'pictureId': data['pictureId'],
-                'city': data['city'],
-                'rating': data['rating'],
-              })
-          .toList();
-      return {'error': false, 'restaurants': mappedRestaurants};
-    } else {
-      return {'error': true, 'message': 'Failed to search restaurants'};
+    } catch (e) {
+      throw Exception('Error: $e');
     }
   }
 
@@ -85,7 +86,32 @@ class ApiService {
       if (response.statusCode == 200) {
         return json.decode(response.body);
       } else {
-        throw Exception('Failed to add review');
+        throw Exception('Failed to add review. Status code: ${response.statusCode}');
+      }
+    } catch (e) {
+      throw Exception('Error: $e');
+    }
+  }
+
+  Future<Map<String, dynamic>> getRandomRestaurants() async {
+    try {
+      final response = await fetchData('/list');
+
+      if (response['restaurants'] != null) {
+        final List<dynamic> restaurantsData = response['restaurants'];
+        final List<Map<String, dynamic>> mappedRestaurants = restaurantsData
+            .map((data) => {
+                  'id': data['id'],
+                  'name': data['name'],
+                  'description': data['description'],
+                  'pictureId': data['pictureId'],
+                  'city': data['city'],
+                  'rating': data['rating'],
+                })
+            .toList();
+        return {'error': false, 'restaurants': mappedRestaurants};
+      } else {
+        throw Exception('Failed to get random restaurants');
       }
     } catch (e) {
       throw Exception('Error: $e');

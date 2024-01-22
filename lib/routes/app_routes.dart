@@ -1,6 +1,6 @@
 abstract class AppRoutes {
   static const home = '/home';
-  static const account = '/account';
+  static const setting = '/setting';
   static const chat = '/chat';
   static const order = '/order';
   static const favorite = '/favorite';

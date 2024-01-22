@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_subm2_getx/modules/account/account_screen.dart';
+import 'package:flutter_subm2_getx/modules/settings/setting_screen.dart';
 import 'package:flutter_subm2_getx/modules/chat/chat_screen.dart';
 import 'package:flutter_subm2_getx/modules/favorite/favorite_screen.dart';
 import 'package:flutter_subm2_getx/modules/home/home_view.dart';
@@ -24,7 +24,7 @@ class _BottomNavigationScreenState extends State<BottomNavigationScreen> {
     const ChatScreen(),
     const OrderScreen(),
       FavoriteView(),
-    const AccountScreen(),
+     SettingScreen(),
   ];
 
   @override
@@ -58,8 +58,8 @@ class _BottomNavigationScreenState extends State<BottomNavigationScreen> {
                 label: 'Favorite',
               ),
               BottomNavigationBarItem(
-                icon: Icon(Icons.account_circle),
-                label: 'Account',
+                icon: Icon(Icons.settings),
+                label: 'Setting',
               ),
             ],
           ),

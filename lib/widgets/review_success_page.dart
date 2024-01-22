@@ -3,7 +3,7 @@ import 'package:flutter_subm2_getx/routes/app_routes.dart';
 import 'package:get/get.dart';
 
 class ReviewSuccessView extends StatelessWidget {
-  const ReviewSuccessView({Key? key}) : super(key: key);
+  const ReviewSuccessView({super.key});
 
   @override
   Widget build(BuildContext context) {

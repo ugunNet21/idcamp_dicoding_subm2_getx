@@ -3,7 +3,7 @@ import 'package:flutter_subm2_getx/routes/app_routes.dart';
 import 'package:get/get.dart';
 
 class ReviewFailedView extends StatelessWidget {
-  const ReviewFailedView({Key? key}) : super(key: key);
+  const ReviewFailedView({super.key});
 
   @override
   Widget build(BuildContext context) {
